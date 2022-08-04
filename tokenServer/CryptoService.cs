@@ -31,8 +31,8 @@ public class CryptoService
 
         var currentEpoch = (int)(timeElapsed / period);
         var millis = (int)period.TotalMilliseconds;
-        var magicNumberA = 1432;
-        var magicNumberB = 9732;
+        var magicNumberA = 5432;
+        var magicNumberB = 8493;
 
         var seed = unchecked(
             currentEpoch * magicNumberA + magicNumberB * millis);
@@ -95,6 +95,11 @@ public class CryptoService
         int len = base64str.Length;
         int last32BytesSize = len % 4;
         int missingEquals = 4 - last32BytesSize;
+
+        if(last32BytesSize == 0){
+            return base64str;
+        }
+
         while (missingEquals > 0)
         {
             base64str += "=";
